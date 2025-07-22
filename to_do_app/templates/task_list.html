@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'task_list' %}">Home</a>
+            <a href="{% url 'task_create' %}">Create Task</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Task List</h1>
+        {% if tasks %}
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    <div style="text-align: left;">
+                        <strong>{{ task.title }}</strong><br>
+                        <small>Due: {{ task.due_date }}</small>
+                    </div>
+                    <div>
+                        <a href="{% url 'task_detail' pk=task.pk %}" class="btn">View</a>
+                        <form action="{% url 'task_delete' pk=task.pk %}" method="post" class="inline-form">
+                            {% csrf_token %}
+                            <button type="submit">Delete</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No tasks available. <a href="{% url 'task_create' %}">Create one now</a>.</p>
+        {% endif %}
+    </main>
+</body>
+</html>

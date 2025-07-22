@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Detail</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'task_list' %}">Home</a>
+            <a href="{% url 'task_create' %}">Create Task</a>
+        </nav>
+    </header>
+    <main>
+        <h1>{{ task.title }}</h1>
+        <p>{{ task.description }}</p>
+        <p><strong>Due Date:</strong> {{ task.due_date }}</p>
+
+        <div style="margin: 20px 0;">
+            <form action="{% url 'task_complete' pk=task.pk %}" method="post" class="inline-form">
+                {% csrf_token %}
+                <button type="submit">Mark as Complete</button>
+            </form>
+            <form action="{% url 'task_incomplete' pk=task.pk %}" method="post" class="inline-form">
+                {% csrf_token %}
+                <button type="submit">Mark as Incomplete</button>
+            </form>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <a href="{% url 'task_update' pk=task.pk %}" class="btn">Edit</a>
+            <a href="{% url 'task_delete' pk=task.pk %}" class="btn" style="background: #e74c3c;">Delete</a>
+        </div>
+    </main>
+</body>
+</html>

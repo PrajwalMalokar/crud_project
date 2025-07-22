@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Delete</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'task_list' %}">Home</a>
+            <a href="{% url 'task_create' %}">Create Task</a>
+        </nav>
+    </header>
+    <main>
+        <section class="confirm-delete">
+            <h1>Delete Task Confirmation</h1>
+            <p>Are you sure you want to delete the task:</p>
+            <h2>{{ task.title }}</h2>
+            <form action="{% url 'task_delete' pk=task.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn danger">Yes, Delete</button>
+                <a href="{% url 'task_detail' pk=task.pk %}" class="btn">Cancel</a>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
